@@ -32,6 +32,9 @@ class Player(GameSprite):
             self.rect.y += self.speed
 
 
+if __name__ != "__main__":
+    exit(0)
+
 back = (200, 255, 255)
 win_width = 600
 win_height = 500
@@ -60,33 +63,35 @@ while game:
         if e.type == pygame.QUIT:
             game = False
 
-    if not finish:
-        window.fill(back)
-        racket1.update_l()
-        racket2.update_r()
-        ball.rect.x += speed_x
-        ball.rect.y += speed_y
+    if finish:
+        continue
 
-        if pygame.sprite.collide_rect(racket1, ball) or pygame.sprite.collide_rect(racket2, ball):
-            speed_x *= -1
-            speed_y *= 1
+    window.fill(back)
+    racket1.update_l()
+    racket2.update_r()
+    ball.rect.x += speed_x
+    ball.rect.y += speed_y
 
-        if ball.rect.y > win_height-50 or ball.rect.y < 0:
-            speed_y *= -1
+    if pygame.sprite.collide_rect(racket1, ball) or pygame.sprite.collide_rect(racket2, ball):
+        speed_x *= -1
+        speed_y *= 1
 
-        if ball.rect.x < 0:
-            finish = True
-            window.blit(lose1, (200, 200))
-            game_over = True
+    if ball.rect.y > win_height-50 or ball.rect.y < 0:
+        speed_y *= -1
 
-        if ball.rect.x > win_width:
-            finish = True
-            window.blit(lose2, (200, 200))
-            game_over = True
+    if ball.rect.x < 0:
+        finish = True
+        window.blit(lose1, (200, 200))
+        game_over = True
 
-        racket1.reset()
-        racket2.reset()
-        ball.reset()
+    if ball.rect.x > win_width:
+        finish = True
+        window.blit(lose2, (200, 200))
+        game_over = True
+
+    racket1.reset()
+    racket2.reset()
+    ball.reset()
 
     pygame.display.update()
     clock.tick(FPS)
